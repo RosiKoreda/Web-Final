@@ -1,0 +1,68 @@
+﻿@page "/admin/habers"
+@page "/admin"
+@inherits OwningComponentBase<IHaberRepository>
+
+<table class="table table-sm table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th><th>Name</th>
+            <th>Category</th><th>Image</th><td/>
+        </tr>
+    </thead>
+    <tbody>
+        @if (HaberData?.Count() > 0) {
+            @foreach (Haber h in HaberData)
+            {
+                <tr>
+                    <td>@h.HaberID</td>
+                    <td>@h.Name</td>
+                    <td>@h.Category</td>
+                    <td>@h.ImageUrl</td>
+                    <td>
+                        <NavLink class="btn btn-info btn-sm"
+                                 href="@GetDetailsUrl(h.HaberID)">
+                            Details
+                        </NavLink>
+                        <NavLink class="btn btn-warning btn-sm"
+                                 href="@GetEditUrl(h.HaberID)">
+                            Edit
+                        </NavLink>
+                        <button class="btn btn-danger btn-sm"
+                                 @onclick="@(e => DeleteHaber(h))">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            }
+        } else {
+            <tr>
+                <td colspan="5" class="text-center">No Habers</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<NavLink class="btn btn-primary" href="/admin/habers/create">Create</NavLink>
+
+@code {
+
+    public IHaberRepository Repository => Service;
+
+    public IEnumerable<Haber> HaberData { get; set; }
+
+    protected async override Task OnInitializedAsync() {
+        await UpdateData();
+    }
+
+    public async Task UpdateData() {
+        HaberData = await Repository.Habers.ToListAsync();
+    }
+
+    public async Task DeleteHaber(Haber h) {
+        Repository.DeleteHaber(h);
+        await UpdateData();
+    }
+
+    public string GetDetailsUrl(long id) => $"/admin/habers/details/{id}";
+    public string GetEditUrl(long id) => $"/admin/habers/edit/{id}";
+}

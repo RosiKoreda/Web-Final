@@ -1,0 +1,71 @@
+﻿@page "/admin/habers/edit/{id:long}"
+@page "/admin/habers/create"
+@inherits OwningComponentBase<IHaberRepository>
+
+<style>
+    div.validation-message { color: rgb(220, 53, 69); font-weight: 500 }
+</style>
+
+<h3 class="bg-@ThemeColor text-white text-center p-1">@TitleText a Haber</h3>
+<EditForm Model="Haber" OnValidSubmit="SaveHaber">
+    <DataAnnotationsValidator />
+    @if(Haber.HaberID != 0) {
+        <div class="form-group">
+            <label>ID</label>
+            <input class="form-control" disabled value="@Haber.HaberID" />
+        </div>
+    }
+    <div class="form-group">
+        <label>Name</label>
+        <ValidationMessage For="@(() => Haber.Name)" />
+        <InputText class="form-control" @bind-Value="Haber.Name" />
+    </div>
+    <div class="form-group">
+        <label>Description</label>
+        <ValidationMessage For="@(() => Haber.Description)" />
+        <InputText class="form-control" @bind-Value="Haber.Description" />
+    </div>
+    <div class="form-group">
+        <label>Category</label>
+        <ValidationMessage For="@(() => Haber.Category)" />
+        <InputText class="form-control" @bind-Value="Haber.Category" />
+    </div>
+    <div class="form-group">
+        <label>Image</label>
+        <ValidationMessage For="@(() => Haber.ImageUrl)" />
+        <InputText class="form-control" @bind-Value="Haber.ImageUrl" />
+    </div>
+    <button type="submit" class="btn btn-@ThemeColor">Save</button>
+    <NavLink class="btn btn-secondary" href="/admin/habers">Cancel</NavLink>
+</EditForm>
+
+@code {
+
+    public IHaberRepository Repository => Service;
+
+    [Inject]
+    public NavigationManager NavManager { get; set; }
+
+    [Parameter]
+    public long Id { get; set; } = 0;
+
+    public Haber Haber { get; set; } = new Haber();
+
+    protected override void OnParametersSet() {
+        if (Id != 0) {
+            Haber = Repository.Habers.FirstOrDefault(h => h.HaberID == Id);
+        }
+    }
+
+    public void SaveHaber() {
+        if (Id == 0) {
+            Repository.CreateHaber(Haber);
+        } else {
+            Repository.SaveHaber(Haber);
+        }
+        NavManager.NavigateTo("/admin/habers");
+    }
+
+    public string ThemeColor => Id == 0 ? "primary" : "warning";
+    public string TitleText => Id == 0 ? "Create" : "Edit";
+}

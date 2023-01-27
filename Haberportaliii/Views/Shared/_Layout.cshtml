@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SportsStore</title>
+    <link href="/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />    
+    <link href="/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="/assets/site.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/assets/owl.carousel.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar fixed-top navbar-expand-md navbar-collapse py-4 " style="background-color: #000000;">
+            <!--Header Bölümü-->
+            <div class="container">
+                
+                <ul class="navbar-nav ">
+                    <li class="nav-item active left">
+                        <a class="nav-link active f-Head-blue" asp-area="" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+   
+    <div class="container-fluid mt-5 " style="padding-top:50px;">
+        <main role="main" class="pt-3" style="padding-bottom:100px;">
+             
+            @RenderBody()
+        </main>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"> </script>
+    <script src="/assets/js/owl.carousel.min.js"></script>
+    <script src="/assets/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/assets/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/site.js" asp-append-version="true"></script>
+    <script id="_wauckb">var _wau = _wau || []; _wau.push(["small", "87i9csm39v", "ckb"]);</script>
+    <script async src="//waust.at/s.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,15 @@
+﻿@model Haber
+<div class="">
+    <div class="bg-faded p-1">
+        <img style="width:350px;height:197px;" src="@Model.ImageUrl" />
+    </div>
+    <form id="@Model.HaberID" method="post">
+        <input type="hidden" asp-for="HaberID" />
+        <input type="hidden" name="returnUrl"
+               value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+        
+        <h4 class="pt-2">
+            <a asp-controller="Home" asp-action="HaberDetay" asp-route-id="@Model.HaberID" class="a-tim text-decoration-none">@Model.Name</a>
+        </h4>
+    </form>
+</div>
